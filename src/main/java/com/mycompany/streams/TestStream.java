@@ -27,7 +27,20 @@ public class TestStream {
         cursos.stream().sorted(new ComparatorDuracionCurso().reversed()).limit(3).forEach((curso) -> {System.out.println(curso.getTitulo());});
         
         System.out.println("\nMostrar en consola la duración total de todos los cursos.");
-        //cursos.stream().
+        System.out.println(cursos.stream().map(Curso::getDuracion).reduce(0.0f, Float::sum).toString() + " horas.");
+        
+        System.out.println("\nMostrar en consola todos aquellos libros que superen el promedio en cuanto a duración se refiere.");
+        System.out.println("Promedio: " + (cursos.stream().map(Curso::getDuracion).reduce(0.0f, Float::sum)/cursos.size()));
+        cursos.stream().filter((curso) -> curso.getDuracion()>(cursos.stream().map(Curso::getDuracion).reduce(0.0f, Float::sum)/cursos.size())).forEach((curso) -> {System.out.println(curso.toString());});
+        
+        System.out.println("\nMostrar en consola la duración de todos aquellos cursos que tengan una cantidad de alumnos inscritos menor a 500.");
+        cursos.stream().filter((curso) -> curso.getAlumnos()<500).forEach((curso) -> {System.out.println(curso.getDuracion());});
+        
+        System.out.println("\nObtener el curso con mayor duración.");
+        System.out.println(cursos.stream().max(new ComparatorDuracionCurso()).get().toString());
+        
+        System.out.println("\nCrear una lista de Strings con todos los títulos de los cursos.");
+        cursos.stream().map(Curso::getTitulo).toList().forEach((titulo) -> {System.out.println(titulo);});
         
     }
     
